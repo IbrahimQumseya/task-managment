@@ -48,6 +48,7 @@ export const updateUserProfile = createAsyncThunk('user/updateUserProfile', asyn
     const res = await axios.post('/users/upload/profile-image', body, {
       headers: { 'Content-Type': 'multipart/form-data;boundary' },
     });
+    thunkAPI.dispatch(getUserProfileImage());
     return res.data;
   } catch (error) {
     throw Error(error);

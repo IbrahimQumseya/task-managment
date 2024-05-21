@@ -80,6 +80,12 @@ function NavBar() {
   }, [doesUserHasImage, dispatch]);
 
   useEffect(() => {
+    if (!doesUserHasImage.match('blob:')) {
+      dispatch(getUserProfileImage());
+    }
+  }, [dispatch, doesUserHasImage]);
+
+  useEffect(() => {
     setImage(profileImage || null);
   }, [profileImage]);
   return (

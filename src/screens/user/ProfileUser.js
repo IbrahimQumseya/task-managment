@@ -50,12 +50,12 @@ const ProfileUser = () => {
     }
   }, [dispatch, doesUserHaveProfilePicture]);
 
-  useEffect(() => {
-    if (!selectUserProfileImage.match('blob:')) {
-      dispatch(getUserProfileImage());
-    }
-  }, [dispatch, selectUserProfileImage]);
-  
+  // useEffect(() => {
+  //   if (!selectUserProfileImage.match('blob:')) {
+  //     dispatch(getUserProfileImage());
+  //   }
+  // }, [dispatch, selectUserProfileImage]);
+
   useEffect(() => {
     setImage(selectUserProfileImage || null);
     setLocation(userDetails.location || '');
@@ -75,45 +75,49 @@ const ProfileUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (
-      userDetails.location &&
-      userDetails.address &&
-      userDetails.number &&
-      userDetails.telephone &&
-      user.firstName &&
-      user.lastName
-    ) {
-      const bodyParameters = {
-        firstName,
-        lastName,
-        location,
-        address,
-        number: String(number),
-        telephone: String(number),
-      };
-      dispatch(updateUserDetails(bodyParameters));
-      setEnableEdit(!enableEdit);
-      setMessage('User has been updated cu success');
-      dispatch(setUserFirstnameLastname({ firstName, lastName }));
+    try {
+      if (
+        userDetails.location &&
+        userDetails.address &&
+        (userDetails.telephone || userDetails.telephone === 0) &&
+        (userDetails.number || userDetails.number === 0) &&
+        user.firstName &&
+        user.lastName
+      ) {
+        const bodyParameters = {
+          firstName,
+          lastName,
+          location,
+          address,
+          number: String(number),
+          telephone: String(telephone),
+        };
+        dispatch(updateUserDetails(bodyParameters));
+        setEnableEdit(!enableEdit);
+        setMessage('User has been updated cu success');
+        dispatch(setUserFirstnameLastname({ firstName, lastName }));
+      }
+      if (
+        !userDetails.location &&
+        !userDetails.address &&
+        (!userDetails.number || !userDetails.number === 0) &&
+        (!userDetails.telephone || !userDetails.telephone === 0)
+      ) {
+        const bodyParameters = {
+          idUser,
+          location,
+          address,
+          number: String(number),
+          telephone: String(number),
+        };
+        console.log(bodyParameters);
+        dispatch(createUserDetails(bodyParameters));
+      }
+    } catch (error) {
+      //ErrorMessage
+    } finally {
+      dispatch(fetchGetUserDetails());
     }
-    if (
-      userDetails.location === '' &&
-      userDetails.address === '' &&
-      userDetails.number === '' &&
-      userDetails.telephone === ''
-    ) {
-      const bodyParameters = {
-        idUser,
-        location,
-        address,
-        number: String(number),
-        telephone: String(number),
-      };
-      console.log(bodyParameters);
-      dispatch(createUserDetails(bodyParameters));
-    }
-    dispatch(fetchGetUserDetails());
   };
 
   const handleChangeImage = (e) => {
