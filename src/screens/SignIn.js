@@ -20,6 +20,8 @@ import { login } from '../features/user/userSlice';
 import axios from '../api/newAPI';
 // import BasicAlerts from '../components/BasicAlerts';
 import { useTranslation } from 'react-i18next';
+import GoogleLoginComponent from '../components/GoogleAuth';
+import FacebookLoginComponent from '../components/FacebookLoginComponent';
 
 export default function SignIn() {
   const { t } = useTranslation();
@@ -116,6 +118,16 @@ export default function SignIn() {
           <Button type='submit' fullWidth disabled={enabled} variant='contained' sx={{ mt: 3, mb: 2, height: 45 }}>
             {t('SignIn')}
           </Button>
+          <Grid container>
+            <Grid item xs>
+              <GoogleLoginComponent />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <FacebookLoginComponent />
+            </Grid>
+          </Grid>
           <Grid container>
             <Grid item xs>
               <Link href='#' variant='body2'>

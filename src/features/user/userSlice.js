@@ -1,4 +1,5 @@
 import { combineReducers, createSlice } from '@reduxjs/toolkit';
+import { sentFacebookAuth } from '../../api/authAPI';
 import {
   createUserDetails,
   fetchGetUserDetails,
@@ -8,6 +9,7 @@ import {
 } from '../../api/userAPI';
 
 const initialState = {
+  accessToken: '',
   user: {
     id: '',
     email: '',
@@ -139,6 +141,20 @@ export const userSlice = createSlice({
         state.isPending = false;
       })
       .addCase(updateUserProfile.rejected, (state, _action) => {
+        state.isRejected = true;
+        state.isFulfilled = false;
+        state.isPending = false;
+      })
+
+      .addCase(sentFacebookAuth.pending, (state, _action) => {
+        state.isPending = true;
+      })
+      .addCase(sentFacebookAuth.fulfilled, (state, action) => {
+        state.accessToken = action.payload;
+        state.isFulfilled = true;
+        state.isPending = false;
+      })
+      .addCase(sentFacebookAuth.rejected, (state, _action) => {
         state.isRejected = true;
         state.isFulfilled = false;
         state.isPending = false;

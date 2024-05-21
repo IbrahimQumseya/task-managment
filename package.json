@@ -18,20 +18,25 @@
     "bcrypt": "^5.0.1",
     "buffer": "^6.0.3",
     "dotenv": "^16.0.0",
+    "formik": "^2.2.9",
+    "http-proxy-middleware": "^2.0.4",
     "i18next": "^21.6.11",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.2",
     "react-i18next": "^11.15.4",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.0",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:e2e": "cypress open",
@@ -56,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "cypress": "^9.4.1"
   }
 }
